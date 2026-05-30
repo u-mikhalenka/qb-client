@@ -1,0 +1,13 @@
+<form [formRoot]="form">
+  <tui-textfield>
+    <label tuiLabel>Username</label>
+    <input type="text" tuiInput [formField]="form.username" />
+  </tui-textfield>
+
+  <tui-textfield>
+    <label tuiLabel>Password</label>
+    <input type="password" tuiInput [formField]="form.password" />
+  </tui-textfield>
+
+  <button type="submit" tuiButton>Login</button>
+</form>
