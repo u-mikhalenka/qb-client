@@ -1,0 +1,121 @@
+.qb-torrent-list-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--tui-border-normal);
+  border-radius: 8px;
+  background-color: var(--tui-background-elevation-1);
+
+  header span {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  progress {
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    right: 4px;
+    width: auto;
+    color: var(--qb-torrent-list-item-state-color);
+  }
+}
+
+.qb-torrent-list-item__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.qb-torrent-list-item__speed {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  span {
+    font-variant: tabular-nums;
+    width: 8ch;
+  }
+  tui-icon {
+    opacity: 0.7;
+    inline-size: 18px;
+    block-size: 18px;
+  }
+}
+
+.qb-torrent-list-item__meta {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 16px;
+  row-gap: 4px;
+
+  dt {
+    font-weight: 500;
+  }
+
+  dt:after {
+    content: ': ';
+  }
+
+  dd {
+    margin: 0;
+    place-self: end;
+  }
+}
+
+.qb-torrent-list-item__actions {
+  display: flex;
+  gap: 4px;
+}
+
+.qb-torrent-list-item {
+  --qb-torrent-list-item-state-color: #64748b;
+
+  &[data-qb-state='downloading'],
+  &[data-qb-state='forcedDL'] {
+    --qb-torrent-list-item-state-color: #3b82f6;
+  }
+
+  &[data-qb-state='uploading'],
+  &[data-qb-state='forcedUP'] {
+    --qb-torrent-list-item-state-color: #22c55e;
+  }
+
+  &[data-qb-state='pausedDL'],
+  &[data-qb-state='pausedUP'] {
+    --qb-torrent-list-item-state-color: #94a3b8;
+  }
+
+  &[data-qb-state='queuedDL'],
+  &[data-qb-state='queuedUP'] {
+    --qb-torrent-list-item-state-color: #8b5cf6;
+  }
+
+  &[data-qb-state='stalledDL'],
+  &[data-qb-state='stalledUP'] {
+    --qb-torrent-list-item-state-color: #f59e0b;
+  }
+
+  &[data-qb-state='checkingDL'],
+  &[data-qb-state='checkingUP'],
+  &[data-qb-state='checkingResumeData'] {
+    --qb-torrent-list-item-state-color: #eab308;
+  }
+
+  &[data-qb-state='metaDL'] {
+    --qb-torrent-list-item-state-color: #06b6d4;
+  }
+
+  &[data-qb-state='allocating'],
+  &[data-qb-state='moving'] {
+    --qb-torrent-list-item-state-color: #6366f1;
+  }
+
+  &[data-qb-state='error'],
+  &[data-qb-state='missingFiles'] {
+    --qb-torrent-list-item-state-color: #ef4444;
+  }
+}
