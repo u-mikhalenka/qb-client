@@ -1,4 +1,10 @@
-import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  ViewEncapsulation,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { form, FormField, FormRoot } from '@angular/forms/signals';
 import { TuiButton, TuiInput, TuiLabel, TuiTextfield } from '@taiga-ui/core';
 import { AuthService } from '../../core/auth.service';
@@ -8,6 +14,7 @@ import { AuthService } from '../../core/auth.service';
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TuiButton, TuiTextfield, TuiInput, TuiLabel, FormField, FormRoot],
 })
 export class LoginPage {
