@@ -1,4 +1,6 @@
-const target = '';
+require('dotenv').config();
+
+const target = process.env.QB_URL;
 
 module.exports = {
   '/api': {
