@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, ViewEncapsulation } from '@angular/core';
 import { ApiTorrentInfo } from '../../../core/api-objects';
 import { TorrentListItem } from '../torrent-list-item/torrent-list-item';
 
@@ -15,4 +15,19 @@ import { TorrentListItem } from '../torrent-list-item/torrent-list-item';
 })
 export class TorrentsList {
   public readonly torrents = input.required<ReadonlyArray<ApiTorrentInfo>>();
+  public readonly selectMode = input(false);
+  public readonly selected = model<ReadonlySet<string>>(new Set());
+
+  protected onChangeSelected(hash: string, selected: boolean): void {
+    this.selected.update((cur) => {
+      const ids = new Set(cur);
+      if (selected) {
+        ids.add(hash);
+      } else {
+        ids.delete(hash);
+      }
+
+      return ids;
+    });
+  }
 }

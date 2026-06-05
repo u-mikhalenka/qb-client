@@ -2,21 +2,101 @@
   type="button"
   tuiIconButton
   size="s"
+  appearance="secondary"
+  [disabled]="!hasSelection()"
+  (click)="maxPriority.emit()"
+>
+  <tui-icon icon="@tui.arrow-up-to-line" />
+</button>
+<button
+  type="button"
+  tuiIconButton
+  size="s"
+  appearance="secondary"
+  [disabled]="!hasSelection()"
+  (click)="incPriority.emit()"
+>
+  <tui-icon icon="@tui.arrow-up" />
+</button>
+<button
+  type="button"
+  tuiIconButton
+  size="s"
+  appearance="secondary"
+  [disabled]="!hasSelection()"
+  (click)="decPriority.emit()"
+>
+  <tui-icon icon="@tui.arrow-down" />
+</button>
+<button
+  type="button"
+  tuiIconButton
+  size="s"
+  appearance="secondary"
+  [disabled]="!hasSelection()"
+  (click)="minPriority.emit()"
+>
+  <tui-icon icon="@tui.arrow-down-to-line" />
+</button>
+
+<div role="separator"></div>
+
+<button
+  type="button"
+  tuiIconButton
+  size="s"
+  appearance="secondary"
+  [disabled]="!hasSelection()"
+  (click)="resume.emit()"
+>
+  <tui-icon icon="@tui.play" />
+</button>
+
+<button
+  type="button"
+  tuiIconButton
+  size="s"
+  appearance="secondary"
+  [disabled]="!hasSelection()"
+  (click)="forceResume.emit()"
+>
+  <tui-icon icon="@tui.fast-forward" />
+</button>
+
+<button
+  type="button"
+  tuiIconButton
+  size="s"
+  appearance="secondary"
+  [disabled]="!hasSelection()"
+  (click)="pause.emit()"
+>
+  <tui-icon icon="@tui.pause" />
+</button>
+
+<button
+  type="button"
+  tuiIconButton
+  size="s"
   appearance="secondary-destructive"
   style="margin-right: auto"
+  [disabled]="!hasSelection()"
+  (click)="deleteFilesDialogOpen.set(true)"
 >
   <tui-icon icon="@tui.trash" />
 </button>
-<button type="button" tuiIconButton size="s" appearance="secondary">
-  <tui-icon icon="@tui.arrow-up-to-line" />
-</button>
-<button type="button" tuiIconButton size="s" appearance="secondary">
-  <tui-icon icon="@tui.arrow-up" />
-</button>
-<button type="button" tuiIconButton size="s" appearance="secondary">
-  <tui-icon icon="@tui.arrow-down" />
-</button>
-<button type="button" tuiIconButton size="s" appearance="secondary">
-  <tui-icon icon="@tui.arrow-down-to-line" />
-</button>
-<button type="button" tuiButton size="s" appearance="secondary">Pause</button>
+
+<ng-template
+  [(tuiDialog)]="deleteFilesDialogOpen"
+  [tuiDialogOptions]="{ label: 'Delete torrent?', size: 's' }"
+>
+  <form tuiForm (submit.prevent)="onDeleteFilesSubmit()">
+    <label class="qb-checkbox">
+      <input type="checkbox" tuiCheckbox name="deleteFiles" [(ngModel)]="deleteFiles" />
+      <span>Delete files</span>
+    </label>
+    <footer>
+      <button type="submit" tuiButton appearance="primary-destructive" size="m">Delete</button>
+    </footer>
+  </form>
+</ng-template>

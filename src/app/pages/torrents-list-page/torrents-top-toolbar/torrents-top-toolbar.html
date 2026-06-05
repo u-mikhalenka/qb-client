@@ -1,0 +1,31 @@
+@if (!selectMode()) {
+  <button type="button" tuiButton size="s" appearance="secondary" (click)="selectMode.set(true)">
+    Select
+  </button>
+} @else {
+  <button type="button" tuiButton size="s" appearance="secondary">Select All</button>
+
+  @switch (selectedCount()) {
+    @case (0) {
+      <span>Select items</span>
+    }
+
+    @case (1) {
+      <span>{{ selectedCount() }} item</span>
+    }
+
+    @default {
+      <span>{{ selectedCount() }} items</span>
+    }
+  }
+
+  <button
+    type="button"
+    tuiIconButton
+    size="s"
+    appearance="secondary"
+    (click)="selectMode.set(false)"
+  >
+    <tui-icon icon="@tui.x" />
+  </button>
+}

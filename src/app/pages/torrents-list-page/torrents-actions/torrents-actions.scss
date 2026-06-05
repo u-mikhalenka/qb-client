@@ -1,5 +1,16 @@
 .qb-torrents-actions {
   display: flex;
   gap: 4px;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
   padding: 8px;
+  border: 1px solid var(--tui-border-normal);
+  border-radius: 8px;
+
+  [role='separator'] {
+    height: 80%;
+    width: 1px;
+    background-color: var(--tui-background-base-alt);
+  }
 }

@@ -1,6 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { TorrentsService } from '../../core/torrents.service';
 import { TorrentsList } from './torrents-list/torrents-list';
+import { TorrentsTopToolbar } from './torrents-top-toolbar/torrents-top-toolbar';
+import { TuiFloatingContainer } from '@taiga-ui/layout';
 import { TorrentsActions } from './torrents-actions/torrents-actions';
 
 @Component({
@@ -8,7 +17,7 @@ import { TorrentsActions } from './torrents-actions/torrents-actions';
   templateUrl: './torrents-list-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [TorrentsList, TorrentsActions],
+  imports: [TorrentsList, TorrentsTopToolbar, TuiFloatingContainer, TorrentsActions],
   host: {
     class: 'qb-torrents-list-page',
   },
@@ -16,5 +25,45 @@ import { TorrentsActions } from './torrents-actions/torrents-actions';
 export class TorrentsListPage {
   private readonly torrentsService = inject(TorrentsService);
 
-  protected readonly torrents = this.torrentsService.torrents;
+  protected readonly selectMode = signal(true);
+  protected readonly selected = signal<ReadonlySet<string>>(new Set());
+
+  protected readonly torrents = computed(() => {
+    return this.torrentsService
+      .torrents()
+      .slice()
+      .sort((a, b) => b.priority - a.priority);
+  });
+
+  protected onMaxPriority(): void {
+    this.torrentsService.maxPriority(this.selected());
+  }
+
+  protected onIncPriority(): void {
+    this.torrentsService.incPriority(this.selected());
+  }
+
+  protected onDecPriority(): void {
+    this.torrentsService.decPriority(this.selected());
+  }
+
+  protected onMinPriority(): void {
+    this.torrentsService.minPriority(this.selected());
+  }
+
+  protected onResume(): void {
+    this.torrentsService.resume(this.selected());
+  }
+
+  protected onForceResume(): void {
+    this.torrentsService.forceResume(this.selected());
+  }
+
+  protected onPause(): void {
+    this.torrentsService.pause(this.selected());
+  }
+
+  protected onDelete(options: { deleteFiles: boolean }): void {
+    this.torrentsService.delete(this.selected(), options);
+  }
 }

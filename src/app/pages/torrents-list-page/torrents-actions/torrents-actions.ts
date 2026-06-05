@@ -1,5 +1,14 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { TuiButton, TuiIcon } from '@taiga-ui/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { TuiButton, TuiCheckbox, TuiDialog, TuiIcon } from '@taiga-ui/core';
+import { TuiForm } from '@taiga-ui/layout';
 
 @Component({
   selector: 'qb-torrents-actions',
@@ -7,9 +16,32 @@ import { TuiButton, TuiIcon } from '@taiga-ui/core';
   styleUrl: './torrents-actions.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [TuiButton, TuiIcon],
+  imports: [TuiButton, TuiIcon, TuiDialog, TuiForm, TuiCheckbox, FormsModule],
   host: {
     class: 'qb-torrents-actions',
   },
 })
-export class TorrentsActions {}
+export class TorrentsActions {
+  public readonly selected = input.required<ReadonlySet<string>>();
+
+  public readonly maxPriority = output();
+  public readonly incPriority = output();
+  public readonly decPriority = output();
+  public readonly minPriority = output();
+  public readonly resume = output();
+  public readonly pause = output();
+  public readonly forceResume = output();
+  public readonly delete = output<{ deleteFiles: boolean }>();
+
+  protected readonly deleteFiles = signal(false);
+  protected readonly deleteFilesDialogOpen = signal(false);
+
+  protected readonly hasSelection = () => this.selected().size > 0;
+
+  protected onDeleteFilesSubmit(): void {
+    const deleteFiles = this.deleteFiles();
+    this.deleteFilesDialogOpen.set(false);
+    this.deleteFiles.set(false);
+    this.delete.emit({ deleteFiles });
+  }
+}

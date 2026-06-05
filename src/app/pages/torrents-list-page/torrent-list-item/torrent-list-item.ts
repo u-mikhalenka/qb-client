@@ -2,13 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   input,
+  model,
   signal,
   ViewEncapsulation,
 } from '@angular/core';
 import { ApiTorrentInfo, ApiTorrentState } from '../../../core/api-objects';
 import { TuiCard, TuiHeader } from '@taiga-ui/layout';
-import { TuiButton, TuiExpand, TuiIcon } from '@taiga-ui/core';
-import { TuiButtonGroup, TuiChevron, TuiProgressBar } from '@taiga-ui/kit';
+import { TuiExpand, TuiIcon } from '@taiga-ui/core';
+import { TuiProgressBar } from '@taiga-ui/kit';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'qb-torrent-list-item',
@@ -16,25 +18,19 @@ import { TuiButtonGroup, TuiChevron, TuiProgressBar } from '@taiga-ui/kit';
   templateUrl: './torrent-list-item.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [
-    TuiCard,
-    TuiHeader,
-    TuiExpand,
-    TuiButton,
-    TuiChevron,
-    TuiProgressBar,
-    TuiIcon,
-    TuiButtonGroup,
-  ],
+  imports: [TuiCard, TuiHeader, TuiExpand, TuiProgressBar, TuiIcon, FormsModule],
   host: {
     class: 'qb-torrent-list-item',
+    '[class.qb-torrent-list-item__selectable]': 'selectMode()',
     '[attr.data-qb-state]': 'state()',
   },
 })
 export class TorrentListItem {
   public readonly torrent = input.required<ApiTorrentInfo>();
+  public readonly selectMode = input(false);
+  public readonly isSelected = model(false);
 
-  protected readonly expanded = signal(true);
+  protected readonly expanded = signal(false);
 
   protected readonly state = () => this.torrent().state;
   protected readonly completed = () => formatBytes(this.torrent().completed);

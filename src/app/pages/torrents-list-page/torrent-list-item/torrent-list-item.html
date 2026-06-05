@@ -1,38 +1,30 @@
-<header tuiHeader="body-s">
-  <span>{{ torrent().name }}</span>
-</header>
+<div class="qb-torrent-list-item__content" (click)="expanded.set(!expanded())">
+  <header tuiHeader="body-s">
+    <span>{{ torrent().name }}</span>
+  </header>
 
-<div class="qb-torrent-list-item__row"></div>
+  <div class="qb-torrent-list-item__row"></div>
 
-<div class="qb-torrent-list-item__row">
-  <span>{{ completed() }} of {{ total() }} </span>
-  <span class="qb-torrent-list-item__speed"
-    ><tui-icon icon="@tui.arrow-down" /><span>{{ dlspeed() }}/s</span></span
-  >
-  <span class="qb-torrent-list-item__speed"
-    ><tui-icon icon="@tui.arrow-up" /><span>{{ upspeed() }}/s</span></span
-  >
-  <button tuiIconButton appearance="primary" size="s" type="button">
-    <tui-icon icon="@tui.pause" />
-  </button>
-  <button
-    tuiIconButton
-    appearance="secondary"
-    size="s"
-    type="button"
-    [tuiChevron]="expanded()"
-    (click)="expanded.set(!expanded())"
-  ></button>
+  <div class="qb-torrent-list-item__row">
+    <span class="qb-torrent-list-item__size">{{ completed() }} of {{ total() }} </span>
+    <span style="flex: 1 1 0"></span>
+    <span class="qb-torrent-list-item__speed"
+      ><tui-icon icon="@tui.arrow-down" /><span>{{ dlspeed() }}/s</span></span
+    >
+    <span class="qb-torrent-list-item__speed"
+      ><tui-icon icon="@tui.arrow-up" /><span>{{ upspeed() }}/s</span></span
+    >
+  </div>
+
+  <tui-expand [expanded]="expanded()">
+    <dl class="qb-torrent-list-item__meta">
+      @for (item of meta(); track item.caption) {
+        <dt>{{ item.caption }}</dt>
+        <dd>{{ item.value }}</dd>
+      }
+    </dl>
+  </tui-expand>
 </div>
-
-<tui-expand [expanded]="expanded()">
-  <dl class="qb-torrent-list-item__meta">
-    @for (item of meta(); track item.caption) {
-      <dt>{{ item.caption }}</dt>
-      <dd>{{ item.value }}</dd>
-    }
-  </dl>
-</tui-expand>
 
 <progress
   class="qb-torrent-list-item__progress"
@@ -41,3 +33,14 @@
   [value]="progress()"
   max="1"
 ></progress>
+
+@if (selectMode()) {
+  <div class="qb-torrent-list-item__select-trigger" (click)="isSelected.set(!isSelected())">
+    <input
+      class="qb-torrent-list-item__select-indicator"
+      type="checkbox"
+      tuiCheckbox
+      [checked]="isSelected()"
+    />
+  </div>
+}

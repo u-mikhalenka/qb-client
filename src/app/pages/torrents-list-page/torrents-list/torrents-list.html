@@ -1,3 +1,8 @@
 @for (torrent of torrents(); track torrent.hash) {
-  <qb-torrent-list-item [torrent]="torrent" />
+  <qb-torrent-list-item
+    [torrent]="torrent"
+    [selectMode]="selectMode()"
+    [isSelected]="selected().has(torrent.hash)"
+    (isSelectedChange)="onChangeSelected(torrent.hash, $event)"
+  />
 }

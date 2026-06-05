@@ -1,2 +1,35 @@
-<qb-torrents-actions />
-<qb-torrents-list [torrents]="torrents()" />
+<style>
+  .qb-torrents-list-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .qb-torrents-list-page__content {
+    flex: 1 1 0;
+    overflow: auto;
+  }
+</style>
+
+<qb-torrents-top-toolbar [(selectMode)]="selectMode" [selectedCount]="selected().size" />
+
+<div class="qb-torrents-list-page__content">
+  <qb-torrents-list [torrents]="torrents()" [selectMode]="selectMode()" [(selected)]="selected" />
+</div>
+
+@if (selectMode()) {
+  <footer tuiFloatingContainer>
+    <qb-torrents-actions
+      style="margin: 0 auto"
+      [selected]="selected()"
+      (maxPriority)="onMaxPriority()"
+      (incPriority)="onIncPriority()"
+      (decPriority)="onDecPriority()"
+      (minPriority)="onMinPriority()"
+      (resume)="onResume()"
+      (forceResume)="onForceResume()"
+      (pause)="onPause()"
+      (delete)="onDelete($event)"
+    />
+  </footer>
+}
