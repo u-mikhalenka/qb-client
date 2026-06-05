@@ -1,14 +1,14 @@
 .qb-torrent-list-item {
   position: relative;
-  padding: 8px;
-  border: 1px solid var(--tui-border-normal);
-  border-radius: 8px;
-  background-color: var(--tui-background-elevation-1);
   overflow: hidden;
 
   &.qb-torrent-list-item__selectable .qb-torrent-list-item__content {
     margin-left: 40px;
   }
+}
+
+mat-card-content {
+  margin-bottom: 16px;
 }
 
 .qb-torrent-list-item__content {
@@ -26,11 +26,12 @@
   }
 }
 
-progress.qb-torrent-list-item__progress {
+mat-progress-bar.qb-torrent-list-item__progress {
   position: absolute;
   bottom: 0;
-  left: 4px;
-  right: 4px;
+  left: 8px;
+  right: 8px;
+  border-radius: 4px;
   width: auto;
   color: var(--qb-torrent-list-item-state-color);
 }
@@ -40,7 +41,7 @@ progress.qb-torrent-list-item__progress {
   inset: 0;
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 4px;
 }
 
 .qb-torrent-list-item__row {
@@ -64,7 +65,7 @@ progress.qb-torrent-list-item__progress {
     font-variant: tabular-nums;
     width: 8ch;
   }
-  tui-icon {
+  mat-icon {
     opacity: 0.7;
     inline-size: 18px;
     block-size: 18px;

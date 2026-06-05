@@ -1,14 +1,26 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
+  inject,
   input,
   output,
   signal,
+  TemplateRef,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TuiButton, TuiCheckbox, TuiDialog, TuiIcon } from '@taiga-ui/core';
-import { TuiForm } from '@taiga-ui/layout';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatDivider } from '@angular/material/divider';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
   selector: 'qb-torrents-actions',
@@ -16,12 +28,24 @@ import { TuiForm } from '@taiga-ui/layout';
   styleUrl: './torrents-actions.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [TuiButton, TuiIcon, TuiDialog, TuiForm, TuiCheckbox, FormsModule],
+  imports: [
+    MatButton,
+    MatIconButton,
+    MatIcon,
+    MatDivider,
+    MatDialogContent,
+    MatDialogTitle,
+    MatDialogActions,
+    MatCheckbox,
+    FormsModule,
+  ],
   host: {
     class: 'qb-torrents-actions',
   },
 })
 export class TorrentsActions {
+  private readonly dialog = inject(MatDialog);
+
   public readonly selected = input.required<ReadonlySet<string>>();
 
   public readonly maxPriority = output();
@@ -33,14 +57,25 @@ export class TorrentsActions {
   public readonly forceResume = output();
   public readonly delete = output<{ deleteFiles: boolean }>();
 
+  protected readonly deleteDialogOpen = signal(false);
   protected readonly deleteFiles = signal(false);
-  protected readonly deleteFilesDialogOpen = signal(false);
 
   protected readonly hasSelection = () => this.selected().size > 0;
 
+  protected readonly deleteDialogTpl = viewChild.required<TemplateRef<void>>('deleteDialog');
+
+  public constructor() {
+    effect((onCleanup) => {
+      if (!this.deleteDialogOpen()) return;
+
+      const ref = this.dialog.open(this.deleteDialogTpl());
+      onCleanup(() => ref.close());
+    });
+  }
+
   protected onDeleteFilesSubmit(): void {
     const deleteFiles = this.deleteFiles();
-    this.deleteFilesDialogOpen.set(false);
+    this.deleteDialogOpen.set(false);
     this.deleteFiles.set(false);
     this.delete.emit({ deleteFiles });
   }

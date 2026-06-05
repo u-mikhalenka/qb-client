@@ -20,6 +20,7 @@ export class AuthService {
     return this.http
       .get('/api/v2/app/version', {
         withCredentials: true,
+        responseType: 'text',
       })
       .pipe(
         map(() => true),
@@ -46,7 +47,7 @@ export function protectedRouteGuard(): CanActivateFn {
       map((isAuthenticated) => {
         if (isAuthenticated) return true;
 
-        return router.createUrlTree(['/']);
+        return router.createUrlTree(['/login']);
       }),
     );
   };

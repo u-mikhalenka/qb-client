@@ -6,8 +6,10 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { form, FormField, FormRoot } from '@angular/forms/signals';
-import { TuiButton, TuiInput, TuiLabel, TuiTextfield } from '@taiga-ui/core';
+import { MatLabel, MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { AuthService } from '../../core/auth.service';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'qb-login-page',
@@ -15,7 +17,7 @@ import { AuthService } from '../../core/auth.service';
   styleUrl: './login-page.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [TuiButton, TuiTextfield, TuiInput, TuiLabel, FormField, FormRoot],
+  imports: [FormField, FormRoot, MatFormField, MatInput, MatLabel, MatButton],
 })
 export class LoginPage {
   private readonly auth = inject(AuthService);

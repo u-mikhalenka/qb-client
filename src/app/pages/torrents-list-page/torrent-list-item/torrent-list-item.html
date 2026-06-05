@@ -1,46 +1,42 @@
-<div class="qb-torrent-list-item__content" (click)="expanded.set(!expanded())">
-  <header tuiHeader="body-s">
-    <span>{{ torrent().name }}</span>
-  </header>
+<mat-card>
+  <mat-card-content>
+    <div class="qb-torrent-list-item__content" (click)="expanded.set(!expanded())">
+      <header>
+        <span>{{ torrent().name }}</span>
+      </header>
 
-  <div class="qb-torrent-list-item__row"></div>
+      <div class="qb-torrent-list-item__row"></div>
 
-  <div class="qb-torrent-list-item__row">
-    <span class="qb-torrent-list-item__size">{{ completed() }} of {{ total() }} </span>
-    <span style="flex: 1 1 0"></span>
-    <span class="qb-torrent-list-item__speed"
-      ><tui-icon icon="@tui.arrow-down" /><span>{{ dlspeed() }}/s</span></span
-    >
-    <span class="qb-torrent-list-item__speed"
-      ><tui-icon icon="@tui.arrow-up" /><span>{{ upspeed() }}/s</span></span
-    >
-  </div>
+      <div class="qb-torrent-list-item__row">
+        <span class="qb-torrent-list-item__size">{{ completed() }} of {{ total() }} </span>
+        <span style="flex: 1 1 0"></span>
+        <span class="qb-torrent-list-item__speed"
+          ><mat-icon fontIcon="arrow_downward_alt" /><span>{{ dlspeed() }}/s</span></span
+        >
+        <span class="qb-torrent-list-item__speed"
+          ><mat-icon fontIcon="arrow_upward_alt" /><span>{{ upspeed() }}/s</span></span
+        >
+      </div>
 
-  <tui-expand [expanded]="expanded()">
-    <dl class="qb-torrent-list-item__meta">
-      @for (item of meta(); track item.caption) {
-        <dt>{{ item.caption }}</dt>
-        <dd>{{ item.value }}</dd>
+      @if (expanded()) {
+        <dl class="qb-torrent-list-item__meta">
+          @for (item of meta(); track item.caption) {
+            <dt>{{ item.caption }}</dt>
+            <dd>{{ item.value }}</dd>
+          }
+        </dl>
       }
-    </dl>
-  </tui-expand>
-</div>
+    </div>
 
-<progress
-  class="qb-torrent-list-item__progress"
-  tuiProgressBar
-  size="xs"
-  [value]="progress()"
-  max="1"
-></progress>
+    @if (selectMode()) {
+      <div class="qb-torrent-list-item__select-trigger" (click)="isSelected.set(!isSelected())">
+        <mat-checkbox class="qb-torrent-list-item__select-indicator" [checked]="isSelected()" />
+      </div>
+    }
+  </mat-card-content>
 
-@if (selectMode()) {
-  <div class="qb-torrent-list-item__select-trigger" (click)="isSelected.set(!isSelected())">
-    <input
-      class="qb-torrent-list-item__select-indicator"
-      type="checkbox"
-      tuiCheckbox
-      [checked]="isSelected()"
-    />
-  </div>
-}
+  <mat-progress-bar
+    class="qb-torrent-list-item__progress"
+    [value]="progress() * 100"
+  ></mat-progress-bar>
+</mat-card>

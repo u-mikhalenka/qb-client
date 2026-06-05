@@ -9,7 +9,6 @@ import {
 import { TorrentsService } from '../../core/torrents.service';
 import { TorrentsList } from './torrents-list/torrents-list';
 import { TorrentsTopToolbar } from './torrents-top-toolbar/torrents-top-toolbar';
-import { TuiFloatingContainer } from '@taiga-ui/layout';
 import { TorrentsActions } from './torrents-actions/torrents-actions';
 
 @Component({
@@ -17,7 +16,7 @@ import { TorrentsActions } from './torrents-actions/torrents-actions';
   templateUrl: './torrents-list-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [TorrentsList, TorrentsTopToolbar, TuiFloatingContainer, TorrentsActions],
+  imports: [TorrentsList, TorrentsTopToolbar, TorrentsActions],
   host: {
     class: 'qb-torrents-list-page',
   },
@@ -25,7 +24,7 @@ import { TorrentsActions } from './torrents-actions/torrents-actions';
 export class TorrentsListPage {
   private readonly torrentsService = inject(TorrentsService);
 
-  protected readonly selectMode = signal(true);
+  protected readonly selectMode = signal(false);
   protected readonly selected = signal<ReadonlySet<string>>(new Set());
 
   protected readonly torrents = computed(() => {

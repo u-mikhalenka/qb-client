@@ -7,10 +7,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ApiTorrentInfo, ApiTorrentState } from '../../../core/api-objects';
-import { TuiCard, TuiHeader } from '@taiga-ui/layout';
-import { TuiExpand, TuiIcon } from '@taiga-ui/core';
-import { TuiProgressBar } from '@taiga-ui/kit';
 import { FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'qb-torrent-list-item',
@@ -18,7 +19,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './torrent-list-item.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [TuiCard, TuiHeader, TuiExpand, TuiProgressBar, TuiIcon, FormsModule],
+  imports: [MatIcon, MatCheckbox, MatCard, MatCardContent, MatProgressBar, FormsModule],
   host: {
     class: 'qb-torrent-list-item',
     '[class.qb-torrent-list-item__selectable]': 'selectMode()',
@@ -51,17 +52,6 @@ export class TorrentListItem {
       { caption: 'Peers', value: peers },
     ].filter((item) => !!item.value);
   };
-
-  // protected dlspeed = signal(formatBytes(0));
-  // protected upspeed = signal(formatBytes(0));
-  //
-  // protected readonly e = effect((onCleanup) => {
-  //   const id = setInterval(() => {
-  //     this.dlspeed.set(formatBytes(Math.random() * 100_000_000));
-  //     this.upspeed.set(formatBytes(Math.random() * 100_000_000));
-  //   }, 1500);
-  //   onCleanup(() => clearTimeout(id));
-  // });
 
   protected readonly progress = () => {
     return this.torrent().progress;

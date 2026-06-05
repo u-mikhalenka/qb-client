@@ -1,10 +1,9 @@
-import { TuiRoot } from '@taiga-ui/core';
 import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'qb-root',
-  imports: [RouterOutlet, TuiRoot],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.scss',

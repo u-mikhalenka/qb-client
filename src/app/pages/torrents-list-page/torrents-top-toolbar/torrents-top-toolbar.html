@@ -1,9 +1,7 @@
 @if (!selectMode()) {
-  <button type="button" tuiButton size="s" appearance="secondary" (click)="selectMode.set(true)">
-    Select
-  </button>
+  <button type="button" matButton (click)="selectMode.set(true)">Select</button>
 } @else {
-  <button type="button" tuiButton size="s" appearance="secondary">Select All</button>
+  <button type="button" matButton>Select All</button>
 
   @switch (selectedCount()) {
     @case (0) {
@@ -19,13 +17,7 @@
     }
   }
 
-  <button
-    type="button"
-    tuiIconButton
-    size="s"
-    appearance="secondary"
-    (click)="selectMode.set(false)"
-  >
-    <tui-icon icon="@tui.x" />
+  <button type="button" matIconButton (click)="selectMode.set(false)">
+    <mat-icon fontIcon="close" />
   </button>
 }

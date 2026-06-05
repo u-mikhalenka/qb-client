@@ -1,13 +1,13 @@
 <form [formRoot]="form">
-  <tui-textfield>
-    <label tuiLabel>Username</label>
-    <input type="text" tuiInput [formField]="form.username" />
-  </tui-textfield>
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input type="text" matInput [formField]="form.username" />
+  </mat-form-field>
 
-  <tui-textfield>
-    <label tuiLabel>Password</label>
-    <input type="password" tuiInput [formField]="form.password" />
-  </tui-textfield>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input type="password" matInput [formField]="form.password" />
+  </mat-form-field>
 
-  <button type="submit" tuiButton>Login</button>
+  <button type="submit" matButton>Login</button>
 </form>

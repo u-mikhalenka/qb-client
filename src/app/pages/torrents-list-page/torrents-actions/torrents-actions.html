@@ -1,102 +1,100 @@
 <button
   type="button"
-  tuiIconButton
+  matIconButton
   size="s"
   appearance="secondary"
   [disabled]="!hasSelection()"
   (click)="maxPriority.emit()"
 >
-  <tui-icon icon="@tui.arrow-up-to-line" />
+  <mat-icon fontIcon="keyboard_double_arrow_up" />
 </button>
 <button
   type="button"
-  tuiIconButton
+  matIconButton
   size="s"
   appearance="secondary"
   [disabled]="!hasSelection()"
   (click)="incPriority.emit()"
 >
-  <tui-icon icon="@tui.arrow-up" />
+  <mat-icon fontIcon="keyboard_arrow_up" />
 </button>
 <button
   type="button"
-  tuiIconButton
+  matIconButton
   size="s"
   appearance="secondary"
   [disabled]="!hasSelection()"
   (click)="decPriority.emit()"
 >
-  <tui-icon icon="@tui.arrow-down" />
+  <mat-icon fontIcon="keyboard_arrow_down" />
 </button>
 <button
   type="button"
-  tuiIconButton
+  matIconButton
   size="s"
   appearance="secondary"
   [disabled]="!hasSelection()"
   (click)="minPriority.emit()"
 >
-  <tui-icon icon="@tui.arrow-down-to-line" />
+  <mat-icon fontIcon="keyboard_double_arrow_down" />
 </button>
 
-<div role="separator"></div>
+<mat-divider vertical />
 
 <button
   type="button"
-  tuiIconButton
+  matIconButton
   size="s"
   appearance="secondary"
   [disabled]="!hasSelection()"
   (click)="resume.emit()"
 >
-  <tui-icon icon="@tui.play" />
+  <mat-icon fontIcon="play_arrow" />
 </button>
 
 <button
   type="button"
-  tuiIconButton
+  matIconButton
   size="s"
   appearance="secondary"
   [disabled]="!hasSelection()"
   (click)="forceResume.emit()"
 >
-  <tui-icon icon="@tui.fast-forward" />
+  <mat-icon fontIcon="fast_forward" />
 </button>
 
 <button
   type="button"
-  tuiIconButton
+  matIconButton
   size="s"
   appearance="secondary"
   [disabled]="!hasSelection()"
   (click)="pause.emit()"
 >
-  <tui-icon icon="@tui.pause" />
+  <mat-icon fontIcon="pause" />
 </button>
 
 <button
   type="button"
-  tuiIconButton
+  matIconButton
   size="s"
   appearance="secondary-destructive"
   style="margin-right: auto"
   [disabled]="!hasSelection()"
-  (click)="deleteFilesDialogOpen.set(true)"
+  (click)="deleteDialogOpen.set(true)"
 >
-  <tui-icon icon="@tui.trash" />
+  <mat-icon fontIcon="delete" />
 </button>
 
-<ng-template
-  [(tuiDialog)]="deleteFilesDialogOpen"
-  [tuiDialogOptions]="{ label: 'Delete torrent?', size: 's' }"
->
-  <form tuiForm (submit.prevent)="onDeleteFilesSubmit()">
-    <label class="qb-checkbox">
-      <input type="checkbox" tuiCheckbox name="deleteFiles" [(ngModel)]="deleteFiles" />
-      <span>Delete files</span>
-    </label>
-    <footer>
-      <button type="submit" tuiButton appearance="primary-destructive" size="m">Delete</button>
-    </footer>
+<ng-template #deleteDialog>
+  <h2 mat-dialog-title>Delete torrent?</h2>
+  <form (ngSubmit)="onDeleteFilesSubmit()">
+    <mat-dialog-content>
+      <mat-checkbox name="deleteFiles" [(ngModel)]="deleteFiles">Delete files</mat-checkbox>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button type="submit" matButton color="warn">Delete</button>
+    </mat-dialog-actions>
   </form>
 </ng-template>

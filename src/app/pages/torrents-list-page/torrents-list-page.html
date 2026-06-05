@@ -5,6 +5,12 @@
     height: 100%;
   }
 
+  .qb-torrents-list-page__actions-container {
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+  }
+
   .qb-torrents-list-page__content {
     flex: 1 1 0;
     overflow: auto;
@@ -18,7 +24,7 @@
 </div>
 
 @if (selectMode()) {
-  <footer tuiFloatingContainer>
+  <footer class="qb-torrents-list-page__actions-container">
     <qb-torrents-actions
       style="margin: 0 auto"
       [selected]="selected()"

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, model, ViewEncapsulation } from '@angular/core';
-import { TuiButton, TuiIcon } from '@taiga-ui/core';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'qb-torrents-top-toolbar',
@@ -7,7 +8,7 @@ import { TuiButton, TuiIcon } from '@taiga-ui/core';
   styleUrl: './torrents-top-toolbar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [TuiButton, TuiIcon],
+  imports: [MatButton, MatIconButton, MatIcon],
   host: {
     class: 'qb-torrents-top-toolbar',
   },
