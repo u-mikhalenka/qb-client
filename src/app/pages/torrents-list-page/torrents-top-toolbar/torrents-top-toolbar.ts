@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, model, ViewEncapsulation } from '@angular/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'qb-torrents-top-toolbar',
@@ -8,7 +9,7 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './torrents-top-toolbar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [MatButton, MatIconButton, MatIcon],
+  imports: [MatButton, MatIconButton, MatIcon, MatMenu, MatMenuItem, MatMenuTrigger],
   host: {
     class: 'qb-torrents-top-toolbar',
   },

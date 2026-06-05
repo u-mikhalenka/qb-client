@@ -1,5 +1,8 @@
 @if (!selectMode()) {
-  <button type="button" matButton (click)="selectMode.set(true)">Select</button>
+  <span></span>
+  <button type="button" matIconButton [matMenuTriggerFor]="menuMore">
+    <mat-icon fontIcon="more_vert" />
+  </button>
 } @else {
   <button type="button" matButton>Select All</button>
 
@@ -21,3 +24,7 @@
     <mat-icon fontIcon="close" />
   </button>
 }
+
+<mat-menu #menuMore>
+  <button type="button" mat-menu-item (click)="selectMode.set(true)">Select</button>
+</mat-menu>
