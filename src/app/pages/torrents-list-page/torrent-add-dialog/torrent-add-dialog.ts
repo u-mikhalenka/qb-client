@@ -10,6 +10,7 @@ import { MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import {
   MatDialogActions,
+  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -26,6 +27,7 @@ import { TorrentsService } from '../../../core/torrents.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [
+    MatDialogClose,
     MatDialogTitle,
     MatDialogActions,
     MatDialogContent,
