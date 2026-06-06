@@ -38,38 +38,45 @@ export class TorrentsListPage {
   });
 
   protected onMaxPriority(): void {
-    this.torrentsService.maxPriority(this.selected());
+    this.doAction((ids) => this.torrentsService.maxPriority(ids));
   }
 
   protected onIncPriority(): void {
-    this.torrentsService.incPriority(this.selected());
+    this.doAction((ids) => this.torrentsService.incPriority(ids));
   }
 
   protected onDecPriority(): void {
-    this.torrentsService.decPriority(this.selected());
+    this.doAction((ids) => this.torrentsService.decPriority(ids));
   }
 
   protected onMinPriority(): void {
-    this.torrentsService.minPriority(this.selected());
+    this.doAction((ids) => this.torrentsService.minPriority(ids));
   }
 
   protected onResume(): void {
-    this.torrentsService.resume(this.selected());
+    this.doAction((ids) => this.torrentsService.resume(ids));
   }
 
   protected onForceResume(): void {
-    this.torrentsService.forceResume(this.selected());
+    this.doAction((ids) => this.torrentsService.forceResume(ids));
   }
 
   protected onPause(): void {
-    this.torrentsService.pause(this.selected());
+    this.doAction((ids) => this.torrentsService.pause(ids));
   }
 
   protected onDelete(options: { deleteFiles: boolean }): void {
-    this.torrentsService.delete(this.selected(), options);
+    this.doAction((ids) => this.torrentsService.delete(ids, options));
   }
 
   protected onAdd(): void {
     this.dialog.open(TorrentAddDialog);
+  }
+
+  private doAction(fn: (ids: ReadonlySet<string>) => void): void {
+    const ids = this.selected();
+    this.selected.set(new Set());
+    this.selectMode.set(false);
+    fn(ids);
   }
 }
