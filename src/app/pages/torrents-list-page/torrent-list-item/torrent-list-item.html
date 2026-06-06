@@ -5,8 +5,9 @@
         <span>{{ torrent().name }}</span>
       </header>
 
-      <div class="qb-torrent-list-item__row"></div>
-
+      <div class="qb-torrent-list-item__row">
+        <span>{{ stateText() }}</span>
+      </div>
       <div class="qb-torrent-list-item__row">
         <span class="qb-torrent-list-item__size">{{ completed() }} of {{ total() }} </span>
         <span style="flex: 1 1 0"></span>

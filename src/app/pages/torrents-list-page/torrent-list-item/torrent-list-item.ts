@@ -13,7 +13,6 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
-import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'qb-torrent-list-item',
@@ -29,7 +28,6 @@ import { MatIconButton } from '@angular/material/button';
     MatProgressBar,
     FormsModule,
     CdkCopyToClipboard,
-    MatIconButton,
     MatIcon,
   ],
   host: {
@@ -52,6 +50,42 @@ export class TorrentListItem {
   protected readonly upspeed = () => formatBytes(this.torrent().upspeed);
   protected readonly canPause = () => canPause(this.torrent().state);
   protected readonly canResume = () => canResume(this.torrent().state);
+  protected readonly stateText = () => {
+    switch (this.state()) {
+      case ApiTorrentState.error:
+        return 'Error';
+      case ApiTorrentState.missingFiles:
+        return 'Missing files';
+      case ApiTorrentState.forcedUP:
+      case ApiTorrentState.uploading:
+        return 'Uploading';
+      case ApiTorrentState.pausedDL:
+      case ApiTorrentState.pausedUP:
+        return 'Paused';
+      case ApiTorrentState.queuedDL:
+      case ApiTorrentState.queuedUP:
+        return 'Queued';
+      case ApiTorrentState.stalledDL:
+      case ApiTorrentState.stalledUP:
+        return 'Stalled';
+      case ApiTorrentState.checkingUP:
+        return 'Checking';
+      case ApiTorrentState.allocating:
+        return 'Allocating';
+      case ApiTorrentState.downloading:
+      case ApiTorrentState.forcedDL:
+        return 'Downloading';
+      case ApiTorrentState.metaDL:
+        return 'Downloading metadata';
+      case ApiTorrentState.checkingResumeData:
+      case ApiTorrentState.checkingDL:
+        return 'Checking';
+      case ApiTorrentState.moving:
+        return 'Moving';
+      case ApiTorrentState.unknown:
+        return 'Unknown';
+    }
+  };
 
   protected readonly meta = () => {
     const torrent = this.torrent();

@@ -68,8 +68,9 @@ mat-progress-bar.qb-torrent-list-item__progress {
   }
   mat-icon {
     opacity: 0.7;
-    inline-size: 18px;
-    block-size: 18px;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
   }
 }
 
