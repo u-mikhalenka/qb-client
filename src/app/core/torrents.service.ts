@@ -1,6 +1,6 @@
 import { HttpClient, httpResource } from '@angular/common/http';
 import { computed, effect, inject, Injectable, linkedSignal, signal } from '@angular/core';
-import { ApiMainDataChanges } from './api-objects';
+import { AddTorrentParams, ApiMainDataChanges } from './api-objects';
 import { withPreviousValue } from './resource';
 import { MainDataState, syncMainData } from './api-objects-utils';
 import { firstValueFrom } from 'rxjs';
@@ -36,6 +36,12 @@ export class TorrentsService {
       const tid = setInterval(() => this.requestedRid.set(this.mainData().rid), 1500);
       onCleanup(() => clearTimeout(tid));
     });
+  }
+
+  public async add(params: AddTorrentParams): Promise<void> {
+    const body = toFormData(params);
+    const req$ = this.http.post('/api/v2/torrents/add', body, { responseType: 'text' });
+    await firstValueFrom(req$);
   }
 
   public async maxPriority(ids: ReadonlySet<string>): Promise<void> {

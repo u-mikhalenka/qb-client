@@ -20,6 +20,7 @@ mat-card-content {
   overflow: hidden;
 
   header span {
+    cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -75,11 +76,15 @@ mat-progress-bar.qb-torrent-list-item__progress {
 .qb-torrent-list-item__meta {
   display: grid;
   grid-template-columns: max-content 1fr;
+  align-items: center;
   column-gap: 16px;
   row-gap: 4px;
+  line-height: 24px;
+  margin: 0;
 
   dt {
     font-weight: 500;
+    justify-self: flex-end;
   }
 
   dt:after {
@@ -89,6 +94,35 @@ mat-progress-bar.qb-torrent-list-item__progress {
   dd {
     margin: 0;
     place-self: end;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+.qb-torrent-list-item__meta__magnet-uri {
+  user-select: none;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  mat-icon {
+    opacity: 0;
+    // position: absolute;
+    right: 0;
+  }
+
+  &:hover mat-icon {
+    opacity: 1;
   }
 }
 

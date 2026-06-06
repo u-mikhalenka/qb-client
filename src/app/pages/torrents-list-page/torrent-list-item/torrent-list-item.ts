@@ -12,6 +12,8 @@ import { MatIcon } from '@angular/material/icon';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'qb-torrent-list-item',
@@ -19,7 +21,17 @@ import { MatProgressBar } from '@angular/material/progress-bar';
   templateUrl: './torrent-list-item.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [MatIcon, MatCheckbox, MatCard, MatCardContent, MatProgressBar, FormsModule],
+  imports: [
+    MatIcon,
+    MatCheckbox,
+    MatCard,
+    MatCardContent,
+    MatProgressBar,
+    FormsModule,
+    CdkCopyToClipboard,
+    MatIconButton,
+    MatIcon,
+  ],
   host: {
     class: 'qb-torrent-list-item',
     '[class.qb-torrent-list-item__selectable]': 'selectMode()',

@@ -1,84 +1,33 @@
-<button
-  type="button"
-  matIconButton
-  size="s"
-  appearance="secondary"
-  [disabled]="!hasSelection()"
-  (click)="maxPriority.emit()"
->
+<button type="button" matIconButton [disabled]="!hasSelection()" (click)="maxPriority.emit()">
   <mat-icon fontIcon="keyboard_double_arrow_up" />
 </button>
-<button
-  type="button"
-  matIconButton
-  size="s"
-  appearance="secondary"
-  [disabled]="!hasSelection()"
-  (click)="incPriority.emit()"
->
+<button type="button" matIconButton [disabled]="!hasSelection()" (click)="incPriority.emit()">
   <mat-icon fontIcon="keyboard_arrow_up" />
 </button>
-<button
-  type="button"
-  matIconButton
-  size="s"
-  appearance="secondary"
-  [disabled]="!hasSelection()"
-  (click)="decPriority.emit()"
->
+<button type="button" matIconButton [disabled]="!hasSelection()" (click)="decPriority.emit()">
   <mat-icon fontIcon="keyboard_arrow_down" />
 </button>
-<button
-  type="button"
-  matIconButton
-  size="s"
-  appearance="secondary"
-  [disabled]="!hasSelection()"
-  (click)="minPriority.emit()"
->
+<button type="button" matIconButton [disabled]="!hasSelection()" (click)="minPriority.emit()">
   <mat-icon fontIcon="keyboard_double_arrow_down" />
 </button>
 
 <mat-divider vertical />
 
-<button
-  type="button"
-  matIconButton
-  size="s"
-  appearance="secondary"
-  [disabled]="!hasSelection()"
-  (click)="resume.emit()"
->
+<button type="button" matIconButton [disabled]="!hasSelection()" (click)="resume.emit()">
   <mat-icon fontIcon="play_arrow" />
 </button>
 
-<button
-  type="button"
-  matIconButton
-  size="s"
-  appearance="secondary"
-  [disabled]="!hasSelection()"
-  (click)="forceResume.emit()"
->
+<button type="button" matIconButton [disabled]="!hasSelection()" (click)="forceResume.emit()">
   <mat-icon fontIcon="fast_forward" />
 </button>
 
-<button
-  type="button"
-  matIconButton
-  size="s"
-  appearance="secondary"
-  [disabled]="!hasSelection()"
-  (click)="pause.emit()"
->
+<button type="button" matIconButton [disabled]="!hasSelection()" (click)="pause.emit()">
   <mat-icon fontIcon="pause" />
 </button>
 
 <button
   type="button"
   matIconButton
-  size="s"
-  appearance="secondary-destructive"
   style="margin-right: auto"
   [disabled]="!hasSelection()"
   (click)="deleteDialogOpen.set(true)"

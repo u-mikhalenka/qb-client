@@ -1,0 +1,45 @@
+<style>
+  .qb-torrent-add-dialog__content {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    min-width: 50vw;
+  }
+</style>
+
+<h4 mat-dialog-title>Add torrent</h4>
+<form [formRoot]="form">
+  <mat-dialog-content>
+    <div class="qb-torrent-add-dialog__content">
+      <mat-form-field>
+        <mat-label>URL</mat-label>
+        <textarea
+          matInput
+          type="text"
+          [formField]="form.urls"
+          placeholder="One link per line"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select [formField]="form.category">
+          <mat-option [value]="''"></mat-option>
+          @for (category of categories(); track category.name) {
+            <mat-option [value]="category.name">{{ category.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox [formField]="form.start">Start torrent</mat-checkbox>
+      <mat-checkbox [formField]="form.sequentialDownload"
+        >Download in sequential order</mat-checkbox
+      >
+      <mat-checkbox [formField]="form.firstLastPeicePrio"
+        >Download first and last pieces first</mat-checkbox
+      >
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="button" mat-button>Cancel</button>
+    <button type="submit" mat-button>Add</button>
+  </mat-dialog-actions>
+</form>

@@ -17,7 +17,11 @@
   }
 </style>
 
-<qb-torrents-top-toolbar [(selectMode)]="selectMode" [selectedCount]="selected().size" />
+<qb-torrents-top-toolbar
+  [(selectMode)]="selectMode"
+  [selectedCount]="selected().size"
+  (add)="onAdd()"
+/>
 
 <div class="qb-torrents-list-page__content">
   <qb-torrents-list [torrents]="torrents()" [selectMode]="selectMode()" [(selected)]="selected" />

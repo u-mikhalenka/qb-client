@@ -10,6 +10,8 @@ import { TorrentsService } from '../../core/torrents.service';
 import { TorrentsList } from './torrents-list/torrents-list';
 import { TorrentsTopToolbar } from './torrents-top-toolbar/torrents-top-toolbar';
 import { TorrentsActions } from './torrents-actions/torrents-actions';
+import { MatDialog } from '@angular/material/dialog';
+import { TorrentAddDialog } from './torrent-add-dialog/torrent-add-dialog';
 
 @Component({
   selector: 'qb-torrents-list-page',
@@ -23,6 +25,7 @@ import { TorrentsActions } from './torrents-actions/torrents-actions';
 })
 export class TorrentsListPage {
   private readonly torrentsService = inject(TorrentsService);
+  private readonly dialog = inject(MatDialog);
 
   protected readonly selectMode = signal(false);
   protected readonly selected = signal<ReadonlySet<string>>(new Set());
@@ -64,5 +67,9 @@ export class TorrentsListPage {
 
   protected onDelete(options: { deleteFiles: boolean }): void {
     this.torrentsService.delete(this.selected(), options);
+  }
+
+  protected onAdd(): void {
+    this.dialog.open(TorrentAddDialog);
   }
 }

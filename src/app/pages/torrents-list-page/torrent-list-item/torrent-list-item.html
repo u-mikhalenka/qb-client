@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
-    <div class="qb-torrent-list-item__content" (click)="expanded.set(!expanded())">
-      <header>
+    <div class="qb-torrent-list-item__content">
+      <header (click)="expanded.set(!expanded())">
         <span>{{ torrent().name }}</span>
       </header>
 
@@ -20,6 +20,14 @@
 
       @if (expanded()) {
         <dl class="qb-torrent-list-item__meta">
+          <dt>Magnet URI</dt>
+          <dd
+            class="qb-torrent-list-item__meta__magnet-uri"
+            [cdkCopyToClipboard]="torrent().magnet_uri"
+          >
+            <span>{{ torrent().magnet_uri }}</span>
+            <mat-icon fontIcon="content_copy" />
+          </dd>
           @for (item of meta(); track item.caption) {
             <dt>{{ item.caption }}</dt>
             <dd>{{ item.value }}</dd>
