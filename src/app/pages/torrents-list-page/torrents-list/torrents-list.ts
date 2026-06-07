@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, input, model, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  model,
+  output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ApiTorrentInfo } from '../../../core/api-objects';
 import { TorrentListItem } from '../torrent-list-item/torrent-list-item';
 
@@ -17,6 +24,10 @@ export class TorrentsList {
   public readonly torrents = input.required<ReadonlyArray<ApiTorrentInfo>>();
   public readonly selectMode = input(false);
   public readonly selected = model<ReadonlySet<string>>(new Set());
+  public readonly resume = output<string>();
+  public readonly forceResume = output<string>();
+  public readonly pause = output<string>();
+  public readonly delete = output<string>();
 
   protected onChangeSelected(hash: string, selected: boolean): void {
     this.selected.update((cur) => {

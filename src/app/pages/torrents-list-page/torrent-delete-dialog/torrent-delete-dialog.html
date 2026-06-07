@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Delete torrent?</h2>
+<form [formRoot]="form">
+  <mat-dialog-content>
+    <mat-checkbox style="margin: 4px 0" name="deleteFiles" [formField]="form.deleteFiles"
+      >Delete files</mat-checkbox
+    >
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" matButton matDialogClose>Cancel</button>
+    <button type="submit" matButton>Delete</button>
+  </mat-dialog-actions>
+</form>

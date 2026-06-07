@@ -24,7 +24,15 @@
 />
 
 <div class="qb-torrents-list-page__content">
-  <qb-torrents-list [torrents]="torrents()" [selectMode]="selectMode()" [(selected)]="selected" />
+  <qb-torrents-list
+    [torrents]="torrents()"
+    [selectMode]="selectMode()"
+    [(selected)]="selected"
+    (resume)="onResume($event)"
+    (forceResume)="onForceResume($event)"
+    (pause)="onPause($event)"
+    (delete)="onDelete($event)"
+  />
 </div>
 
 @if (selectMode()) {
@@ -39,7 +47,7 @@
       (resume)="onResume()"
       (forceResume)="onForceResume()"
       (pause)="onPause()"
-      (delete)="onDelete($event)"
+      (delete)="onDelete()"
     />
   </footer>
 }

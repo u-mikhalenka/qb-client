@@ -30,20 +30,7 @@
   matIconButton
   style="margin-right: auto"
   [disabled]="!hasSelection()"
-  (click)="deleteDialogOpen.set(true)"
+  (click)="delete.emit()"
 >
   <mat-icon fontIcon="delete" />
 </button>
-
-<ng-template #deleteDialog>
-  <h2 mat-dialog-title>Delete torrent?</h2>
-  <form (ngSubmit)="onDeleteFilesSubmit()">
-    <mat-dialog-content>
-      <mat-checkbox name="deleteFiles" [(ngModel)]="deleteFiles">Delete files</mat-checkbox>
-    </mat-dialog-content>
-
-    <mat-dialog-actions align="end">
-      <button type="submit" matButton color="warn">Delete</button>
-    </mat-dialog-actions>
-  </form>
-</ng-template>

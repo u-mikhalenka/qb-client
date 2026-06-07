@@ -3,6 +3,7 @@ import {
   Component,
   input,
   model,
+  output,
   signal,
   ViewEncapsulation,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
+import { MatContextMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 
 @Component({
   selector: 'qb-torrent-list-item',
@@ -29,6 +31,9 @@ import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
     FormsModule,
     CdkCopyToClipboard,
     MatIcon,
+    MatMenu,
+    MatMenuItem,
+    MatContextMenuTrigger,
   ],
   host: {
     class: 'qb-torrent-list-item',
@@ -40,6 +45,10 @@ export class TorrentListItem {
   public readonly torrent = input.required<ApiTorrentInfo>();
   public readonly selectMode = input(false);
   public readonly isSelected = model(false);
+  public readonly resume = output();
+  public readonly forceResume = output();
+  public readonly pause = output();
+  public readonly delete = output();
 
   protected readonly expanded = signal(false);
 

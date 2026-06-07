@@ -12,6 +12,7 @@ import { TorrentsTopToolbar } from './torrents-top-toolbar/torrents-top-toolbar'
 import { TorrentsActions } from './torrents-actions/torrents-actions';
 import { MatDialog } from '@angular/material/dialog';
 import { TorrentAddDialog } from './torrent-add-dialog/torrent-add-dialog';
+import { TorrentDeleteDialog } from './torrent-delete-dialog/torrent-delete-dialog';
 
 @Component({
   selector: 'qb-torrents-list-page',
@@ -37,46 +38,55 @@ export class TorrentsListPage {
       .sort((a, b) => b.priority - a.priority);
   });
 
-  protected onMaxPriority(): void {
-    this.doAction((ids) => this.torrentsService.maxPriority(ids));
+  protected onMaxPriority(hash?: string): void {
+    this.doAction(hash, (ids) => this.torrentsService.maxPriority(ids));
   }
 
-  protected onIncPriority(): void {
-    this.doAction((ids) => this.torrentsService.incPriority(ids));
+  protected onIncPriority(hash?: string): void {
+    this.doAction(hash, (ids) => this.torrentsService.incPriority(ids));
   }
 
-  protected onDecPriority(): void {
-    this.doAction((ids) => this.torrentsService.decPriority(ids));
+  protected onDecPriority(hash?: string): void {
+    this.doAction(hash, (ids) => this.torrentsService.decPriority(ids));
   }
 
-  protected onMinPriority(): void {
-    this.doAction((ids) => this.torrentsService.minPriority(ids));
+  protected onMinPriority(hash?: string): void {
+    this.doAction(hash, (ids) => this.torrentsService.minPriority(ids));
   }
 
-  protected onResume(): void {
-    this.doAction((ids) => this.torrentsService.resume(ids));
+  protected onResume(hash?: string): void {
+    this.doAction(hash, (ids) => this.torrentsService.resume(ids));
   }
 
-  protected onForceResume(): void {
-    this.doAction((ids) => this.torrentsService.forceResume(ids));
+  protected onForceResume(hash?: string): void {
+    this.doAction(hash, (ids) => this.torrentsService.forceResume(ids));
   }
 
-  protected onPause(): void {
-    this.doAction((ids) => this.torrentsService.pause(ids));
+  protected onPause(hash?: string): void {
+    this.doAction(hash, (ids) => this.torrentsService.pause(ids));
   }
 
-  protected onDelete(options: { deleteFiles: boolean }): void {
-    this.doAction((ids) => this.torrentsService.delete(ids, options));
+  protected onDelete(hash?: string): void {
+    TorrentDeleteDialog.open(this.dialog).then((res) => {
+      if (res) {
+        this.doAction(hash, (ids) => this.torrentsService.delete(ids, res));
+      }
+    });
   }
 
   protected onAdd(): void {
     this.dialog.open(TorrentAddDialog);
   }
 
-  private doAction(fn: (ids: ReadonlySet<string>) => void): void {
-    const ids = this.selected();
-    this.selected.set(new Set());
-    this.selectMode.set(false);
+  private doAction(hash: string | undefined, fn: (ids: ReadonlySet<string>) => void): void {
+    let ids: ReadonlySet<string>;
+    if (hash) {
+      ids = new Set([hash]);
+    } else {
+      ids = this.selected();
+      this.selected.set(new Set());
+      this.selectMode.set(false);
+    }
     fn(ids);
   }
 }

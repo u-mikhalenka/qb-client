@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card [matContextMenuTriggerFor]="ctxMenu">
   <mat-card-content>
     <div class="qb-torrent-list-item__content">
       <header (click)="expanded.set(!expanded())">
@@ -49,3 +49,10 @@
     [value]="progress() * 100"
   ></mat-progress-bar>
 </mat-card>
+
+<mat-menu #ctxMenu>
+  <button mat-menu-item (click)="resume.emit()">Resume</button>
+  <button mat-menu-item (click)="pause.emit()">Force resume</button>
+  <button mat-menu-item (click)="pause.emit()">Pause</button>
+  <button mat-menu-item (click)="delete.emit()">Delete</button>
+</mat-menu>

@@ -2,6 +2,10 @@
   <qb-torrent-list-item
     [torrent]="torrent"
     [selectMode]="selectMode()"
+    (resume)="resume.emit(torrent.hash)"
+    (forceResume)="forceResume.emit(torrent.hash)"
+    (pause)="pause.emit(torrent.hash)"
+    (delete)="delete.emit(torrent.hash)"
     [isSelected]="selected().has(torrent.hash)"
     (isSelectedChange)="onChangeSelected(torrent.hash, $event)"
   />
