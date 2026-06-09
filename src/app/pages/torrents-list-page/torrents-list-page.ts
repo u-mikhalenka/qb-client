@@ -20,6 +20,7 @@ import { TorrentDeleteDialog } from './torrent-delete-dialog/torrent-delete-dial
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [TorrentsList, TorrentsTopToolbar, TorrentsActions],
+  providers: [TorrentsService],
   host: {
     class: 'qb-torrents-list-page',
   },

@@ -1,11 +1,11 @@
 import { HttpClient, httpResource } from '@angular/common/http';
-import { computed, effect, inject, Injectable, linkedSignal, signal } from '@angular/core';
+import { computed, effect, inject, linkedSignal, Service, signal } from '@angular/core';
 import { AddTorrentParams, ApiMainDataChanges } from './api-objects';
 import { withPreviousValue } from './resource';
 import { MainDataState, syncMainData } from './api-objects-utils';
 import { firstValueFrom } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Service({ autoProvided: false })
 export class TorrentsService {
   private readonly http = inject(HttpClient);
   private readonly requestedRid = signal(0);
