@@ -13,18 +13,6 @@
       </mat-expansion-panel-header>
 
       <div class="panel-content">
-        <section class="settings-group" aria-labelledby="behavior-language">
-          <h2 id="behavior-language">Language</h2>
-          <mat-form-field>
-            <mat-label>User Interface Language</mat-label>
-            <mat-select [formField]="form.locale">
-              @for (language of languages; track language.value) {
-                <mat-option [value]="language.value">{{ language.label }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        </section>
-
         <section class="settings-group" aria-labelledby="behavior-log">
           <h2 id="behavior-log">Log file</h2>
           <mat-checkbox [formField]="form.file_log_enabled">Enable log file</mat-checkbox>

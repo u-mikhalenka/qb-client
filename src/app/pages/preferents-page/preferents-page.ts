@@ -96,25 +96,13 @@ export class PreferentsPage {
     everySaturday: 8,
     everySunday: 9,
   } as const;
-  protected readonly uploadChokingAlgorithm = { roundRobin: 0, fastestUpload: 1, antiLeech: 2 } as const;
+  protected readonly uploadChokingAlgorithm = {
+    roundRobin: 0,
+    fastestUpload: 1,
+    antiLeech: 2,
+  } as const;
   protected readonly uploadSlotsBehavior = { fixedSlots: 0, uploadRateBased: 1 } as const;
   protected readonly utpTcpMixedMode = { preferTcp: 0, peerProportional: 1 } as const;
-
-  protected readonly languages = [
-    { value: 'en', label: 'English' },
-    { value: 'en_AU', label: 'English (Australia)' },
-    { value: 'en_GB', label: 'English (United Kingdom)' },
-    { value: 'de', label: 'Deutsch' },
-    { value: 'es', label: 'Espanol' },
-    { value: 'fr', label: 'Francais' },
-    { value: 'it', label: 'Italiano' },
-    { value: 'nl', label: 'Nederlands' },
-    { value: 'pl', label: 'Polski' },
-    { value: 'pt_BR', label: 'Portugues brasileiro' },
-    { value: 'ru', label: 'Russkiy' },
-    { value: 'uk', label: 'Ukrainian' },
-    { value: 'zh_CN', label: 'Simplified Chinese' },
-  ];
 
   private readonly formModel = linkedSignal(() => {
     const o = this.preferences.value();
@@ -300,7 +288,8 @@ export class PreferentsPage {
       ssrf_mitigation: o?.ssrf_mitigation ?? true,
       block_peers_on_privileged_ports: o?.block_peers_on_privileged_ports ?? false,
       idn_support_enabled: o?.idn_support_enabled ?? false,
-      upload_choking_algorithm: o?.upload_choking_algorithm ?? ApiUploadChokingAlgorithm.fastestUpload,
+      upload_choking_algorithm:
+        o?.upload_choking_algorithm ?? ApiUploadChokingAlgorithm.fastestUpload,
       upload_slots_behavior: o?.upload_slots_behavior ?? ApiUploadSlotsBehavior.fixedSlots,
       utp_tcp_mixed_mode: o?.utp_tcp_mixed_mode ?? ApiUtpTcpMixedMode.preferTcp,
       announce_to_all_tiers: o?.announce_to_all_tiers ?? true,
