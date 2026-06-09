@@ -1,0 +1,1053 @@
+<mat-toolbar>
+  <a routerLink="/" matIconButton aria-label="Back to torrent list">
+    <mat-icon fontIcon="arrow_back_ios_new" />
+  </a>
+  <span>Settings</span>
+</mat-toolbar>
+
+<form [formRoot]="form" class="preferences-form">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Behavior</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="panel-content">
+        <section class="settings-group" aria-labelledby="behavior-language">
+          <h2 id="behavior-language">Language</h2>
+          <mat-form-field>
+            <mat-label>User Interface Language</mat-label>
+            <mat-select [formField]="form.locale">
+              @for (language of languages; track language.value) {
+                <mat-option [value]="language.value">{{ language.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </section>
+
+        <section class="settings-group" aria-labelledby="behavior-log">
+          <h2 id="behavior-log">Log file</h2>
+          <mat-checkbox [formField]="form.file_log_enabled">Enable log file</mat-checkbox>
+          <mat-form-field>
+            <mat-label>Save path</mat-label>
+            <input matInput [formField]="form.file_log_path" />
+          </mat-form-field>
+          <div class="inline-grid">
+            <mat-checkbox [formField]="form.file_log_backup_enabled"
+              >Backup the log file after</mat-checkbox
+            >
+            <mat-form-field>
+              <mat-label>Size</mat-label>
+              <input matInput type="number" [formField]="form.file_log_max_size" />
+              <mat-hint>KiB</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="inline-grid">
+            <mat-checkbox [formField]="form.file_log_delete_old"
+              >Delete backup logs older than</mat-checkbox
+            >
+            <mat-form-field>
+              <mat-label>Age</mat-label>
+              <input matInput type="number" [formField]="form.file_log_age" />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Unit</mat-label>
+              <mat-select [formField]="form.file_log_age_type">
+                <mat-option [value]="0">days</mat-option>
+                <mat-option [value]="1">months</mat-option>
+                <mat-option [value]="2">years</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-checkbox [formField]="form.performance_warning"
+            >Log performance warnings</mat-checkbox
+          >
+        </section>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Downloads</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="panel-content">
+        <section class="settings-group" aria-labelledby="downloads-adding">
+          <h2 id="downloads-adding">When adding a torrent</h2>
+          <mat-form-field>
+            <mat-label>Torrent content layout</mat-label>
+            <mat-select [formField]="form.torrent_content_layout">
+              <mat-option value="Original">Original</mat-option>
+              <mat-option value="Subfolder">Create subfolder</mat-option>
+              <mat-option value="NoSubfolder">Don't create subfolder</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-checkbox [formField]="form.add_to_top_of_queue">Add to top of queue</mat-checkbox>
+          <mat-checkbox [formField]="form.start_paused_enabled"
+            >Do not start the download automatically</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Torrent stop condition</mat-label>
+            <mat-select [formField]="form.torrent_stop_condition">
+              <mat-option value="None">None</mat-option>
+              <mat-option value="MetadataReceived">Metadata received</mat-option>
+              <mat-option value="FilesChecked">Files checked</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Auto delete mode</mat-label>
+            <mat-select [formField]="form.auto_delete_mode">
+              <mat-option [value]="autoDeleteMode.None">None</mat-option>
+              <mat-option [value]="autoDeleteMode.DeleteTorrentAfterwards"
+                >Delete .torrent files afterwards</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </section>
+
+        <section class="settings-group" aria-labelledby="downloads-files">
+          <h2 id="downloads-files">Files</h2>
+          <mat-checkbox [formField]="form.preallocate_all"
+            >Pre-allocate disk space for all files</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.incomplete_files_ext"
+            >Append .!qB extension to incomplete files</mat-checkbox
+          >
+        </section>
+
+        <section class="settings-group" aria-labelledby="downloads-saving">
+          <h2 id="downloads-saving">Saving Management</h2>
+          <mat-form-field>
+            <mat-label>Default Torrent Management Mode</mat-label>
+            <mat-select [formField]="form.auto_tmm_enabled">
+              <mat-option [value]="false">Manual</mat-option>
+              <mat-option [value]="true">Automatic</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>When Torrent Category changed</mat-label>
+            <mat-select [formField]="form.torrent_changed_tmm_enabled">
+              <mat-option [value]="true">Relocate torrent</mat-option>
+              <mat-option [value]="false">Switch torrent to Manual Mode</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>When Default Save Path changed</mat-label>
+            <mat-select [formField]="form.save_path_changed_tmm_enabled">
+              <mat-option [value]="true">Relocate affected torrents</mat-option>
+              <mat-option [value]="false">Switch affected torrents to Manual Mode</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>When Category Save Path changed</mat-label>
+            <mat-select [formField]="form.category_changed_tmm_enabled">
+              <mat-option [value]="true">Relocate affected torrents</mat-option>
+              <mat-option [value]="false">Switch affected torrents to Manual Mode</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-checkbox [formField]="form.use_subcategories">Use Subcategories</mat-checkbox>
+          <mat-checkbox [formField]="form.use_category_paths_in_manual_mode"
+            >Use category paths in Manual Mode</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Default Save Path</mat-label>
+            <input matInput [formField]="form.save_path" />
+          </mat-form-field>
+          <div class="path-row">
+            <mat-checkbox [formField]="form.temp_path_enabled"
+              >Keep incomplete torrents in</mat-checkbox
+            >
+            <mat-form-field>
+              <mat-label>Incomplete torrents path</mat-label>
+              <input matInput [formField]="form.temp_path" />
+            </mat-form-field>
+          </div>
+          <mat-form-field>
+            <mat-label>Copy .torrent files to</mat-label>
+            <input matInput [formField]="form.export_dir" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Copy .torrent files for finished downloads to</mat-label>
+            <input matInput [formField]="form.export_dir_fin" />
+          </mat-form-field>
+        </section>
+
+        <section class="settings-group" aria-labelledby="downloads-excluded">
+          <h2 id="downloads-excluded">Excluded file names</h2>
+          <mat-checkbox [formField]="form.excluded_file_names_enabled"
+            >Enable excluded names</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Excluded file names</mat-label>
+            <textarea matInput rows="5" [formField]="form.excluded_file_names"></textarea>
+          </mat-form-field>
+        </section>
+
+        <section class="settings-group" aria-labelledby="downloads-email">
+          <h2 id="downloads-email">Email notification upon download completion</h2>
+          <mat-checkbox [formField]="form.mail_notification_enabled"
+            >Enable email notification</mat-checkbox
+          >
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>From</mat-label
+              ><input matInput [formField]="form.mail_notification_sender"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>To</mat-label><input matInput [formField]="form.mail_notification_email"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>SMTP server</mat-label
+              ><input matInput [formField]="form.mail_notification_smtp"
+            /></mat-form-field>
+          </div>
+          <mat-checkbox [formField]="form.mail_notification_ssl_enabled"
+            >This server requires a secure connection (SSL)</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.mail_notification_auth_enabled"
+            >Authentication</mat-checkbox
+          >
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Username</mat-label
+              ><input matInput [formField]="form.mail_notification_username"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Password</mat-label
+              ><input matInput type="password" [formField]="form.mail_notification_password"
+            /></mat-form-field>
+          </div>
+        </section>
+
+        <section class="settings-group" aria-labelledby="downloads-program">
+          <h2 id="downloads-program">Run external program</h2>
+          <mat-checkbox [formField]="form.autorun_on_torrent_added_enabled"
+            >Run external program on torrent added</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Program on torrent added</mat-label>
+            <input matInput [formField]="form.autorun_on_torrent_added_program" />
+          </mat-form-field>
+          <mat-checkbox [formField]="form.autorun_enabled"
+            >Run external program on torrent finished</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Program on torrent finished</mat-label>
+            <input matInput [formField]="form.autorun_program" />
+            <mat-hint>%N name, %L category, %G tags, %F content path, %D save path</mat-hint>
+          </mat-form-field>
+        </section>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Connection</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="panel-content">
+        <section class="settings-group" aria-labelledby="connection-general">
+          <h2 id="connection-general">Peer connection protocol</h2>
+          <mat-form-field>
+            <mat-label>Protocol</mat-label>
+            <mat-select [formField]="form.bittorrent_protocol">
+              <mat-option [value]="bittorrentProtocol.tcpAndUtp">TCP and μTP</mat-option>
+              <mat-option [value]="bittorrentProtocol.tcp">TCP</mat-option>
+              <mat-option [value]="bittorrentProtocol.utp">μTP</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </section>
+
+        <section class="settings-group" aria-labelledby="connection-port">
+          <h2 id="connection-port">Listening Port</h2>
+          <mat-form-field>
+            <mat-label>Port used for incoming connections</mat-label>
+            <input matInput type="number" [formField]="form.listen_port" />
+          </mat-form-field>
+          <mat-checkbox [formField]="form.upnp"
+            >Use UPnP / NAT-PMP port forwarding from my router</mat-checkbox
+          >
+        </section>
+
+        <section class="settings-group" aria-labelledby="connection-limits">
+          <h2 id="connection-limits">Connections Limits</h2>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Global maximum number of connections</mat-label
+              ><input matInput type="number" [formField]="form.max_connec" /><mat-hint
+                >-1 disables limit</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Maximum connections per torrent</mat-label
+              ><input matInput type="number" [formField]="form.max_connec_per_torrent" /><mat-hint
+                >-1 disables limit</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Global maximum number of upload slots</mat-label
+              ><input matInput type="number" [formField]="form.max_uploads" /><mat-hint
+                >-1 disables limit</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Maximum upload slots per torrent</mat-label
+              ><input matInput type="number" [formField]="form.max_uploads_per_torrent" /><mat-hint
+                >-1 disables limit</mat-hint
+              ></mat-form-field
+            >
+          </div>
+        </section>
+
+        <section class="settings-group" aria-labelledby="connection-i2p">
+          <h2 id="connection-i2p">I2P (Experimental)</h2>
+          <mat-checkbox [formField]="form.i2p_enabled">Enable I2P</mat-checkbox>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Host</mat-label><input matInput [formField]="form.i2p_address"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Port</mat-label><input matInput type="number" [formField]="form.i2p_port"
+            /></mat-form-field>
+          </div>
+          <mat-checkbox [formField]="form.i2p_mixed_mode">Mixed mode</mat-checkbox>
+        </section>
+
+        <section class="settings-group" aria-labelledby="connection-proxy">
+          <h2 id="connection-proxy">Proxy Server</h2>
+          <div class="field-grid">
+            <mat-form-field>
+              <mat-label>Type</mat-label>
+              <mat-select [formField]="form.proxy_type">
+                <mat-option value="None">(None)</mat-option>
+                <mat-option value="SOCKS4">SOCKS4</mat-option>
+                <mat-option value="SOCKS5">SOCKS5</mat-option>
+                <mat-option value="HTTP">HTTP</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field
+              ><mat-label>Host</mat-label><input matInput [formField]="form.proxy_ip"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Port</mat-label
+              ><input matInput type="number" [formField]="form.proxy_port"
+            /></mat-form-field>
+          </div>
+          <mat-checkbox [formField]="form.proxy_hostname_lookup"
+            >Perform hostname lookup via proxy</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.proxy_auth_enabled">Authentication</mat-checkbox>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Username</mat-label><input matInput [formField]="form.proxy_username"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Password</mat-label
+              ><input matInput type="password" [formField]="form.proxy_password"
+            /></mat-form-field>
+          </div>
+          <mat-checkbox [formField]="form.proxy_bittorrent"
+            >Use proxy for BitTorrent purposes</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.proxy_peer_connections"
+            >Use proxy for peer connections</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.proxy_rss">Use proxy for RSS purposes</mat-checkbox>
+          <mat-checkbox [formField]="form.proxy_misc">Use proxy for general purposes</mat-checkbox>
+        </section>
+
+        <section class="settings-group" aria-labelledby="connection-filtering">
+          <h2 id="connection-filtering">IP Filtering</h2>
+          <mat-checkbox [formField]="form.ip_filter_enabled"
+            >Filter path (.dat, .p2p, .p2b)</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Filter path</mat-label>
+            <input matInput [formField]="form.ip_filter_path" />
+          </mat-form-field>
+          <mat-checkbox [formField]="form.ip_filter_trackers">Apply to trackers</mat-checkbox>
+          <mat-form-field>
+            <mat-label>Manually banned IP addresses</mat-label>
+            <textarea matInput rows="5" [formField]="form.banned_IPs"></textarea>
+          </mat-form-field>
+        </section>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Speed</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="panel-content">
+        <section class="settings-group" aria-labelledby="speed-global">
+          <h2 id="speed-global">Global Rate Limits</h2>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Upload</mat-label
+              ><input matInput type="number" [formField]="form.up_limit" /><mat-hint
+                >KiB/s, 0 means unlimited</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Download</mat-label
+              ><input matInput type="number" [formField]="form.dl_limit" /><mat-hint
+                >KiB/s, 0 means unlimited</mat-hint
+              ></mat-form-field
+            >
+          </div>
+        </section>
+        <section class="settings-group" aria-labelledby="speed-alt">
+          <h2 id="speed-alt">Alternative Rate Limits</h2>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Upload</mat-label
+              ><input matInput type="number" [formField]="form.alt_up_limit" /><mat-hint
+                >KiB/s</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Download</mat-label
+              ><input matInput type="number" [formField]="form.alt_dl_limit" /><mat-hint
+                >KiB/s</mat-hint
+              ></mat-form-field
+            >
+          </div>
+          <mat-checkbox [formField]="form.scheduler_enabled"
+            >Schedule the use of alternative rate limits</mat-checkbox
+          >
+          <div class="field-grid compact">
+            <mat-form-field
+              ><mat-label>From hour</mat-label
+              ><input matInput type="number" [formField]="form.schedule_from_hour"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>From minute</mat-label
+              ><input matInput type="number" [formField]="form.schedule_from_min"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>To hour</mat-label
+              ><input matInput type="number" [formField]="form.schedule_to_hour"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>To minute</mat-label
+              ><input matInput type="number" [formField]="form.schedule_to_min"
+            /></mat-form-field>
+            <mat-form-field>
+              <mat-label>When</mat-label>
+              <mat-select [formField]="form.scheduler_days">
+                <mat-option [value]="schedulerDays.everyDay">Every day</mat-option>
+                <mat-option [value]="schedulerDays.everyWeekday">Weekdays</mat-option>
+                <mat-option [value]="schedulerDays.everyWeekend">Weekends</mat-option>
+                <mat-option [value]="schedulerDays.everyMonday">Monday</mat-option>
+                <mat-option [value]="schedulerDays.everyTuesday">Tuesday</mat-option>
+                <mat-option [value]="schedulerDays.everyWednesday">Wednesday</mat-option>
+                <mat-option [value]="schedulerDays.everyThursday">Thursday</mat-option>
+                <mat-option [value]="schedulerDays.everyFriday">Friday</mat-option>
+                <mat-option [value]="schedulerDays.everySaturday">Saturday</mat-option>
+                <mat-option [value]="schedulerDays.everySunday">Sunday</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </section>
+        <section class="settings-group" aria-labelledby="speed-settings">
+          <h2 id="speed-settings">Rate Limits Settings</h2>
+          <mat-checkbox [formField]="form.limit_utp_rate"
+            >Apply rate limit to μTP protocol</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.limit_tcp_overhead"
+            >Apply rate limit to transport overhead</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.limit_lan_peers"
+            >Apply rate limit to peers on LAN</mat-checkbox
+          >
+        </section>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>BitTorrent</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="panel-content">
+        <section class="settings-group" aria-labelledby="bt-privacy">
+          <h2 id="bt-privacy">Privacy</h2>
+          <mat-checkbox [formField]="form.dht">Enable DHT to find more peers</mat-checkbox>
+          <mat-checkbox [formField]="form.pex"
+            >Enable Peer Exchange (PeX) to find more peers</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.lsd"
+            >Enable Local Peer Discovery to find more peers</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Encryption mode</mat-label>
+            <mat-select [formField]="form.encryption">
+              <mat-option [value]="encryption.prefer">Allow encryption</mat-option>
+              <mat-option [value]="encryption.forceOn">Require encryption</mat-option>
+              <mat-option [value]="encryption.forceOff">Disable encryption</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-checkbox [formField]="form.anonymous_mode">Enable anonymous mode</mat-checkbox>
+        </section>
+        <section class="settings-group" aria-labelledby="bt-queue">
+          <h2 id="bt-queue">Torrent Queueing</h2>
+          <mat-form-field
+            ><mat-label>Max active checking torrents</mat-label
+            ><input matInput type="number" [formField]="form.max_active_checking_torrents"
+          /></mat-form-field>
+          <mat-checkbox [formField]="form.queueing_enabled">Enable torrent queueing</mat-checkbox>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Maximum active downloads</mat-label
+              ><input matInput type="number" [formField]="form.max_active_downloads"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Maximum active uploads</mat-label
+              ><input matInput type="number" [formField]="form.max_active_uploads"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Maximum active torrents</mat-label
+              ><input matInput type="number" [formField]="form.max_active_torrents"
+            /></mat-form-field>
+          </div>
+          <mat-checkbox [formField]="form.dont_count_slow_torrents"
+            >Do not count slow torrents in these limits</mat-checkbox
+          >
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Download rate threshold</mat-label
+              ><input
+                matInput
+                type="number"
+                [formField]="form.slow_torrent_dl_rate_threshold"
+              /><mat-hint>KiB/s</mat-hint></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Upload rate threshold</mat-label
+              ><input
+                matInput
+                type="number"
+                [formField]="form.slow_torrent_ul_rate_threshold"
+              /><mat-hint>KiB/s</mat-hint></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Torrent inactivity timer</mat-label
+              ><input
+                matInput
+                type="number"
+                [formField]="form.slow_torrent_inactive_timer"
+              /><mat-hint>seconds</mat-hint></mat-form-field
+            >
+          </div>
+        </section>
+        <section class="settings-group" aria-labelledby="bt-seeding">
+          <h2 id="bt-seeding">Seeding Limits</h2>
+          <div class="inline-grid">
+            <mat-checkbox [formField]="form.max_ratio_enabled">When ratio reaches</mat-checkbox>
+            <mat-form-field
+              ><mat-label>Ratio</mat-label
+              ><input matInput type="number" step="0.01" [formField]="form.max_ratio"
+            /></mat-form-field>
+          </div>
+          <div class="inline-grid">
+            <mat-checkbox [formField]="form.max_seeding_time_enabled"
+              >When total seeding time reaches</mat-checkbox
+            >
+            <mat-form-field
+              ><mat-label>Minutes</mat-label
+              ><input matInput type="number" [formField]="form.max_seeding_time"
+            /></mat-form-field>
+          </div>
+          <div class="inline-grid">
+            <mat-checkbox [formField]="form.max_inactive_seeding_time_enabled"
+              >When inactive seeding time reaches</mat-checkbox
+            >
+            <mat-form-field
+              ><mat-label>Minutes</mat-label
+              ><input matInput type="number" [formField]="form.max_inactive_seeding_time"
+            /></mat-form-field>
+          </div>
+          <mat-form-field>
+            <mat-label>Then</mat-label>
+            <mat-select [formField]="form.max_ratio_act">
+              <mat-option [value]="maxRatioAction.pauseTorrent">Pause torrent</mat-option>
+              <mat-option [value]="maxRatioAction.removeTorrent">Remove torrent</mat-option>
+              <mat-option [value]="maxRatioAction.removeTorrentAndFiles"
+                >Remove torrent and its files</mat-option
+              >
+              <mat-option [value]="maxRatioAction.enableSuperSeeding"
+                >Enable super seeding for torrent</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </section>
+        <section class="settings-group" aria-labelledby="bt-trackers">
+          <h2 id="bt-trackers">Trackers</h2>
+          <mat-checkbox [formField]="form.add_trackers_enabled"
+            >Automatically add these trackers to new downloads</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Trackers</mat-label>
+            <textarea matInput rows="5" [formField]="form.add_trackers"></textarea>
+          </mat-form-field>
+        </section>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>RSS</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="panel-content">
+        <section class="settings-group" aria-labelledby="rss-reader">
+          <h2 id="rss-reader">RSS Reader</h2>
+          <mat-checkbox [formField]="form.rss_processing_enabled"
+            >Enable fetching RSS feeds</mat-checkbox
+          >
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Feeds refresh interval</mat-label
+              ><input matInput type="number" [formField]="form.rss_refresh_interval" /><mat-hint
+                >min</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Maximum articles per feed</mat-label
+              ><input matInput type="number" [formField]="form.rss_max_articles_per_feed"
+            /></mat-form-field>
+          </div>
+        </section>
+        <section class="settings-group" aria-labelledby="rss-auto">
+          <h2 id="rss-auto">RSS Torrent Auto Downloader</h2>
+          <mat-checkbox [formField]="form.rss_auto_downloading_enabled"
+            >Enable auto downloading of RSS torrents</mat-checkbox
+          >
+        </section>
+        <section class="settings-group" aria-labelledby="rss-filter">
+          <h2 id="rss-filter">RSS Smart Episode Filter</h2>
+          <mat-checkbox [formField]="form.rss_download_repack_proper_episodes"
+            >Download REPACK/PROPER episodes</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Filters</mat-label>
+            <textarea matInput rows="6" [formField]="form.rss_smart_episode_filters"></textarea>
+          </mat-form-field>
+        </section>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Web UI</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="panel-content">
+        <section class="settings-group" aria-labelledby="webui-remote">
+          <h2 id="webui-remote">Web User Interface (Remote control)</h2>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>IP address</mat-label><input matInput [formField]="form.web_ui_address"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Port</mat-label
+              ><input matInput type="number" [formField]="form.web_ui_port"
+            /></mat-form-field>
+          </div>
+          <mat-checkbox [formField]="form.web_ui_upnp"
+            >Use UPnP / NAT-PMP to forward the port from my router</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.use_https">Use HTTPS instead of HTTP</mat-checkbox>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Certificate</mat-label
+              ><input matInput [formField]="form.web_ui_https_cert_path"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Key</mat-label><input matInput [formField]="form.web_ui_https_key_path"
+            /></mat-form-field>
+          </div>
+        </section>
+        <section class="settings-group" aria-labelledby="webui-auth">
+          <h2 id="webui-auth">Authentication</h2>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Username</mat-label><input matInput [formField]="form.web_ui_username"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Password</mat-label
+              ><input
+                matInput
+                type="password"
+                autocomplete="new-password"
+                [formField]="form.web_ui_password"
+              /><mat-hint>Leave empty to keep current password</mat-hint></mat-form-field
+            >
+          </div>
+          <mat-checkbox [formField]="form.bypass_local_auth"
+            >Bypass authentication for clients on localhost</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.bypass_auth_subnet_whitelist_enabled"
+            >Bypass authentication for clients in whitelisted IP subnets</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Whitelisted IP subnets</mat-label>
+            <textarea matInput rows="4" [formField]="form.bypass_auth_subnet_whitelist"></textarea>
+          </mat-form-field>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Ban after consecutive failures</mat-label
+              ><input matInput type="number" [formField]="form.web_ui_max_auth_fail_count"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Ban duration</mat-label
+              ><input matInput type="number" [formField]="form.web_ui_ban_duration" /><mat-hint
+                >seconds</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Session timeout</mat-label
+              ><input matInput type="number" [formField]="form.web_ui_session_timeout" /><mat-hint
+                >seconds</mat-hint
+              ></mat-form-field
+            >
+          </div>
+        </section>
+        <section class="settings-group" aria-labelledby="webui-security">
+          <h2 id="webui-security">Security</h2>
+          <mat-checkbox [formField]="form.alternative_webui_enabled"
+            >Use alternative Web UI</mat-checkbox
+          >
+          <mat-form-field
+            ><mat-label>Files location</mat-label
+            ><input matInput [formField]="form.alternative_webui_path"
+          /></mat-form-field>
+          <mat-checkbox [formField]="form.web_ui_clickjacking_protection_enabled"
+            >Enable clickjacking protection</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.web_ui_csrf_protection_enabled"
+            >Enable Cross-Site Request Forgery (CSRF) protection</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.web_ui_secure_cookie_enabled"
+            >Enable cookie Secure flag (requires HTTPS)</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.web_ui_host_header_validation_enabled"
+            >Enable Host header validation</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Server domains</mat-label>
+            <textarea matInput rows="2" [formField]="form.web_ui_domain_list"></textarea>
+          </mat-form-field>
+          <mat-checkbox [formField]="form.web_ui_use_custom_http_headers_enabled"
+            >Add custom HTTP headers</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Custom HTTP headers</mat-label>
+            <textarea matInput rows="4" [formField]="form.web_ui_custom_http_headers"></textarea>
+          </mat-form-field>
+          <mat-checkbox [formField]="form.web_ui_reverse_proxy_enabled"
+            >Enable reverse proxy support</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Trusted proxies list</mat-label>
+            <input matInput [formField]="form.web_ui_reverse_proxies_list" />
+          </mat-form-field>
+        </section>
+        <section class="settings-group" aria-labelledby="webui-dyndns">
+          <h2 id="webui-dyndns">Dynamic DNS</h2>
+          <mat-checkbox [formField]="form.dyndns_enabled"
+            >Update my dynamic domain name</mat-checkbox
+          >
+          <mat-form-field>
+            <mat-label>Service</mat-label>
+            <mat-select [formField]="form.dyndns_service">
+              <mat-option [value]="dyndnsService.dyndns">DynDNS</mat-option>
+              <mat-option [value]="dyndnsService.noip">NO-IP</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Domain name</mat-label><input matInput [formField]="form.dyndns_domain"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Username</mat-label><input matInput [formField]="form.dyndns_username"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Password</mat-label
+              ><input matInput type="password" [formField]="form.dyndns_password"
+            /></mat-form-field>
+          </div>
+        </section>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Advanced</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="panel-content">
+        <section class="settings-group" aria-labelledby="advanced-qb">
+          <h2 id="advanced-qb">qBittorrent Section</h2>
+          <div class="field-grid">
+            <mat-form-field>
+              <mat-label>Resume data storage type</mat-label>
+              <mat-select [formField]="form.resume_data_storage_type">
+                <mat-option value="Legacy">Fastresume files</mat-option>
+                <mat-option value="SQLite">SQLite database (experimental)</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field
+              ><mat-label>Physical memory usage limit</mat-label
+              ><input matInput type="number" [formField]="form.memory_working_set_limit" /><mat-hint
+                >MiB</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Network interface</mat-label
+              ><input matInput [formField]="form.current_network_interface"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Optional IP address to bind to</mat-label
+              ><input matInput [formField]="form.current_interface_address"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Save resume data interval</mat-label
+              ><input
+                matInput
+                type="number"
+                [formField]="form.save_resume_data_interval"
+              /><mat-hint>min</mat-hint></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>.torrent file size limit</mat-label
+              ><input matInput type="number" [formField]="form.torrent_file_size_limit" /><mat-hint
+                >bytes</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Refresh interval</mat-label
+              ><input matInput type="number" [formField]="form.refresh_interval" /><mat-hint
+                >ms</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Embedded tracker port</mat-label
+              ><input matInput type="number" [formField]="form.embedded_tracker_port"
+            /></mat-form-field>
+          </div>
+          <mat-checkbox [formField]="form.recheck_completed_torrents"
+            >Recheck torrents on completion</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.resolve_peer_countries"
+            >Resolve peer countries</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.reannounce_when_address_changed"
+            >Reannounce to all trackers when IP or port changed</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.enable_embedded_tracker"
+            >Enable embedded tracker</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.embedded_tracker_port_forwarding"
+            >Enable port forwarding for embedded tracker</mat-checkbox
+          >
+        </section>
+
+        <section class="settings-group" aria-labelledby="advanced-libtorrent">
+          <h2 id="advanced-libtorrent">libtorrent Section</h2>
+          <div class="field-grid">
+            <mat-form-field
+              ><mat-label>Bdecode depth limit</mat-label
+              ><input matInput type="number" [formField]="form.bdecode_depth_limit"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Bdecode token limit</mat-label
+              ><input matInput type="number" [formField]="form.bdecode_token_limit"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Asynchronous I/O threads</mat-label
+              ><input matInput type="number" [formField]="form.async_io_threads"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Hashing threads</mat-label
+              ><input matInput type="number" [formField]="form.hashing_threads"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>File pool size</mat-label
+              ><input matInput type="number" [formField]="form.file_pool_size"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Outstanding memory when checking torrents</mat-label
+              ><input matInput type="number" [formField]="form.checking_memory_use" /><mat-hint
+                >MiB</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Disk cache</mat-label
+              ><input matInput type="number" [formField]="form.disk_cache" /><mat-hint
+                >MiB, -1 auto</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Disk cache expiry interval</mat-label
+              ><input matInput type="number" [formField]="form.disk_cache_ttl" /><mat-hint
+                >seconds</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Disk queue size</mat-label
+              ><input matInput type="number" [formField]="form.disk_queue_size"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Disk IO type</mat-label
+              ><input matInput type="number" [formField]="form.disk_io_type"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Disk IO read mode</mat-label
+              ><input matInput type="number" [formField]="form.disk_io_read_mode"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Disk IO write mode</mat-label
+              ><input matInput type="number" [formField]="form.disk_io_write_mode"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Upload connection speed</mat-label
+              ><input matInput type="number" [formField]="form.connection_speed"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Maximum concurrent HTTP announces</mat-label
+              ><input matInput type="number" [formField]="form.max_concurrent_http_announces"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Stop tracker timeout</mat-label
+              ><input matInput type="number" [formField]="form.stop_tracker_timeout" /><mat-hint
+                >seconds</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Peer TOS</mat-label
+              ><input matInput type="number" [formField]="form.peer_tos"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Peer turnover</mat-label
+              ><input matInput type="number" [formField]="form.peer_turnover"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Peer turnover cutoff</mat-label
+              ><input matInput type="number" [formField]="form.peer_turnover_cutoff"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Peer turnover interval</mat-label
+              ><input matInput type="number" [formField]="form.peer_turnover_interval" /><mat-hint
+                >seconds</mat-hint
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>Request queue size</mat-label
+              ><input matInput type="number" [formField]="form.request_queue_size"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Socket backlog size</mat-label
+              ><input matInput type="number" [formField]="form.socket_backlog_size"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Socket receive buffer size</mat-label
+              ><input matInput type="number" [formField]="form.socket_receive_buffer_size"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Socket send buffer size</mat-label
+              ><input matInput type="number" [formField]="form.socket_send_buffer_size"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Send buffer low watermark</mat-label
+              ><input matInput type="number" [formField]="form.send_buffer_low_watermark"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Send buffer watermark</mat-label
+              ><input matInput type="number" [formField]="form.send_buffer_watermark"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Send buffer watermark factor</mat-label
+              ><input matInput type="number" [formField]="form.send_buffer_watermark_factor"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Outgoing ports min</mat-label
+              ><input matInput type="number" [formField]="form.outgoing_ports_min"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>Outgoing ports max</mat-label
+              ><input matInput type="number" [formField]="form.outgoing_ports_max"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>UPnP lease duration</mat-label
+              ><input matInput type="number" [formField]="form.upnp_lease_duration"
+            /></mat-form-field>
+            <mat-form-field>
+              <mat-label>Upload choking algorithm</mat-label>
+              <mat-select [formField]="form.upload_choking_algorithm">
+                <mat-option [value]="uploadChokingAlgorithm.roundRobin">Round-robin</mat-option>
+                <mat-option [value]="uploadChokingAlgorithm.fastestUpload"
+                  >Fastest upload</mat-option
+                >
+                <mat-option [value]="uploadChokingAlgorithm.antiLeech">Anti-leech</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Upload slots behavior</mat-label>
+              <mat-select [formField]="form.upload_slots_behavior">
+                <mat-option [value]="uploadSlotsBehavior.fixedSlots">Fixed slots</mat-option>
+                <mat-option [value]="uploadSlotsBehavior.uploadRateBased"
+                  >Upload rate based</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>μTP-TCP mixed mode algorithm</mat-label>
+              <mat-select [formField]="form.utp_tcp_mixed_mode">
+                <mat-option [value]="utpTcpMixedMode.preferTcp">Prefer TCP</mat-option>
+                <mat-option [value]="utpTcpMixedMode.peerProportional"
+                  >Peer proportional</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field
+              ><mat-label>Announce IP</mat-label><input matInput [formField]="form.announce_ip"
+            /></mat-form-field>
+          </div>
+          <mat-checkbox [formField]="form.enable_os_cache">Enable OS cache</mat-checkbox>
+          <mat-checkbox [formField]="form.enable_coalesce_read_write"
+            >Enable coalesce reads and writes</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.enable_piece_extent_affinity"
+            >Enable piece extent affinity</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.enable_upload_suggestions"
+            >Enable upload suggestions</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.enable_multi_connections_from_same_ip"
+            >Allow multiple connections from the same IP address</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.validate_https_tracker_certificate"
+            >Validate HTTPS tracker certificates</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.ssrf_mitigation">Enable SSRF mitigation</mat-checkbox>
+          <mat-checkbox [formField]="form.block_peers_on_privileged_ports"
+            >Block peers on privileged ports</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.idn_support_enabled">Enable IDN support</mat-checkbox>
+          <mat-checkbox [formField]="form.announce_to_all_tiers"
+            >Always announce to all tiers</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.announce_to_all_trackers"
+            >Always announce to all trackers in a tier</mat-checkbox
+          >
+          <mat-checkbox [formField]="form.merge_trackers"
+            >Merge trackers from same domain</mat-checkbox
+          >
+        </section>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div class="actions">
+    <button type="submit" mat-flat-button>Save</button>
+  </div>
+</form>

@@ -1,0 +1,115 @@
+@scope (.qb-preferents-page) {
+  :scope {
+    display: block;
+    min-height: 100dvh;
+    background: var(--mat-sys-surface);
+  }
+
+  mat-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    gap: 8px;
+  }
+
+  .preferences-form {
+    box-sizing: border-box;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  mat-accordion {
+    display: block;
+  }
+
+  mat-expansion-panel {
+    margin-bottom: 12px;
+  }
+
+  .panel-content {
+    display: grid;
+    gap: 16px;
+    padding-block: 8px;
+  }
+
+  .settings-group {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: 12px;
+    background: var(--mat-sys-surface-container-lowest);
+  }
+
+  .settings-group h2 {
+    margin: 0;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-title-medium);
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    align-items: start;
+  }
+
+  .field-grid.compact {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .inline-grid,
+  .path-row {
+    display: grid;
+    grid-template-columns: minmax(220px, max-content) minmax(180px, 1fr) minmax(140px, 180px);
+    gap: 12px;
+    align-items: center;
+  }
+
+  .path-row {
+    grid-template-columns: minmax(220px, max-content) 1fr;
+  }
+
+  .actions {
+    position: sticky;
+    bottom: 8px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 0 0;
+    background: linear-gradient(transparent, var(--mat-sys-surface) 25%);
+  }
+
+  @media (max-width: 700px) {
+    .preferences-form {
+      padding: 8px;
+    }
+
+    .settings-group {
+      padding: 12px;
+    }
+
+    .inline-grid,
+    .path-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      align-items: stretch;
+    }
+
+    .actions {
+      padding-inline: 8px;
+    }
+
+    .actions button {
+      width: 100%;
+    }
+  }
+}

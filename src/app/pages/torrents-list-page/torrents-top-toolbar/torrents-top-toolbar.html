@@ -28,4 +28,6 @@
 <mat-menu #menuMore>
   <button type="button" mat-menu-item (click)="add.emit()">Add</button>
   <button type="button" mat-menu-item (click)="selectMode.set(true)">Select</button>
+  <mat-divider />
+  <a routerLink="/preferences" mat-menu-item>Settings</a>
 </mat-menu>

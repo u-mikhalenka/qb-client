@@ -13,6 +13,12 @@ export const routes: Routes = [
     canActivate: [protectedRouteGuard()],
   },
   {
+    path: 'preferences',
+    loadComponent: () =>
+      import('./pages/preferents-page/preferents-page').then((m) => m.PreferentsPage),
+    canActivate: [protectedRouteGuard()],
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: '/torrents',
